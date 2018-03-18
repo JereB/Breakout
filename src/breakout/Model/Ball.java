@@ -1,6 +1,8 @@
 package breakout.Model;
 
 
+import javax.swing.text.MutableAttributeSet;
+
 /**
  * Model of the ball with position, speed and moving angles
  */
@@ -9,12 +11,13 @@ public class Ball {
     private double speed;
     private double x;
     private double y;
-    long lastTime;
+    private double radius = 5;
+
 
     /**
      * Create new ball
      *
-     * @param angle starting angle indegrees. 0 is horizontal to the right
+     * @param angle starting angle in degrees. 0 is horizontal to the right
      * @param speed starting speed of the ball
      * @param x     x-position in the model
      * @param y     y-position in the model
@@ -108,7 +111,14 @@ public class Ball {
         long t = time / 100000;
         x = Math.cos(angle) * speed * t * 0.001 + x;
         y = Math.sin(angle) * speed * t * 0.001 + y;
-        lastTime = time;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
     /**
