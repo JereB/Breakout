@@ -1,8 +1,6 @@
 package breakout.Model;
 
 
-import javax.swing.text.MutableAttributeSet;
-
 /**
  * Model of the ball with position, speed and moving angles
  */
@@ -11,7 +9,7 @@ public class Ball {
     private double speed;
     private double x;
     private double y;
-    private double radius = 5;
+    private double radius = 8;
 
 
     /**
@@ -127,7 +125,23 @@ public class Ball {
      */
     public void collide(double surfaceAngle) {
         angle = (2 * surfaceAngle - angle + Math.PI) % (Math.PI * 2);
+        if(angle < 0 ){
+            angle += Math.PI *2;
+        }
 
+    }
+
+    public boolean isLeftOut(){
+        return (x - radius <= 0 && angle >= Math.PI *0.5 && angle <= Math.PI *1.5);
+    }
+    public boolean isRightOut(){
+        return (x + radius >= Model.WIDTH && !(angle > Math.PI * 0.5 && angle < Math.PI * 1.5));
+    }
+    public boolean isUpperOut(){
+        return (y + radius >= Model.HEIGHT && angle >= 0 && angle <= Math.PI);
+    }
+    public boolean isDownOut(){
+        return (y -radius <= 0 && angle >= Math.PI && angle <= Math.PI *2);
     }
 
 }
