@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -64,6 +66,12 @@ public class View {
         scene.setOnKeyReleased(controller);
     }
 
+
+
+    ////////////////
+    // Draw stuff //
+    ////////////////
+
     public void update() {
         canvas.setWidth(PLAYFIELD_WIDTH);
         canvas.setHeight(PLAYFIELD_HEIGHT);
@@ -97,6 +105,18 @@ public class View {
         gc.setFill(BALL_COLOR);
         gc.fillOval(xToView(b.getX() - b.getRadius()), yPosToView(b.getY() + b.getRadius()), xToView(b.getRadius() * 2), xToView(b.getRadius() * 2));
     }
+
+
+    public void pauseScreen(){
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc.setStroke(Color.GOLD);
+        gc.setFont(new Font(80));
+        gc.setTextAlign(TextAlignment.CENTER);
+        gc.strokeText("Paused\nPress Space To Continue\nPress Q To Quit", PLAYFIELD_WIDTH/2 , PLAYFIELD_HEIGHT/2 );
+    }
+
+
+
 
     /////////////
     // Helpers //

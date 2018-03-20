@@ -26,30 +26,28 @@ public class Paddle {
 
 //        if collision happened
         if (by - br <= y && bx + br >= x && bx - br <= x + width && ba >= Math.PI) {
+//            relativ x-position to center of paddle.
+//            this allows for a simple simulation of a curved surface
             double relX = ((bx - (x + width / 2)) / 2) / width;
             ball.collide(Math.acos(relX));
         }
     }
 
 
-    public void update(){
-        switch(move){
+    public void update() {
+        switch (move) {
             case RIGHT:
-                if(x + width < Model.WIDTH){
-                    x+= INCREMENT;
+                if (x + width < Model.WIDTH) {
+                    x += INCREMENT;
                 }
                 break;
             case LEFT:
-                if(x > 0){
-                    x-=INCREMENT;
+                if (x > 0) {
+                    x -= INCREMENT;
                 }
                 break;
-
         }
-
     }
-
-
 
     ///////////////////////
     // Setter and getter //

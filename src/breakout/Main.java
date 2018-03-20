@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private View view;
     private Model model;
-    private GameState state = GameState.GAME_READY;
 
     @Override
     public void start(Stage primaryStage) {
@@ -23,7 +22,7 @@ public class Main extends Application {
         view.init();
 
 
-        Controller controller = new Controller(state, model);
+        Controller controller = new Controller(model, view);
         Mainloop loop = new Mainloop(model, view);
         view.setController(controller);
         loop.start();
