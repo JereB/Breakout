@@ -1,20 +1,10 @@
 package breakout.view;
 
-import breakout.Model.Ball;
-import breakout.Model.Brick;
 import breakout.Model.Model;
-import breakout.Model.Paddle;
 import breakout.controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 
 public class View {
@@ -22,24 +12,16 @@ public class View {
     public static final int  BRICK_COLOR_COUNT = 5;
 
     // dimension of the view
-    private static double PLAYFIELD_WIDTH = 1000;
-    private static double PLAYFIELD_HEIGHT = 600;
-
-
-
-    //    Colors
-    private Color BALL_COLOR = Color.RED;
-    private Color BACKGROUND_COLOR = Color.BLACK;
-    private Color PADDLE_COLOR = Color.BLUE;
-    private Color[] BRICK_COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.GHOSTWHITE, Color.CORAL};
+    static double PLAYFIELD_WIDTH = 1000;
+    static double PLAYFIELD_HEIGHT = 600;
 
 
     // View objects
     private Stage stage;
     private Model model;
-    private Canvas canvas;
+    private Playfield playfield;
     private Scene scene;
-
+    private Group root;
 
     public View(Stage stage, Model model) {
         this.stage = stage;
@@ -50,9 +32,9 @@ public class View {
 
     public void init() {
         stage.setTitle("Toll und so");
-        canvas = new Canvas();
-        Group root = new Group();
-        root.getChildren().add(canvas);
+        playfield = new Playfield();
+        root = new Group();
+        root.getChildren().add(playfield);
         scene = new Scene(root);
         stage.setScene(scene);
 
@@ -61,6 +43,11 @@ public class View {
 
     }
 
+    public void pauseScreen(){
+        playfield.pauseScreen();
+    }
+
+
     public void setController(Controller controller) {
         scene.setOnKeyPressed(controller);
         scene.setOnKeyReleased(controller);
@@ -68,69 +55,23 @@ public class View {
 
 
 
-    ////////////////
-    // Draw stuff //
-    ////////////////
-
     public void update() {
-        canvas.setWidth(PLAYFIELD_WIDTH);
-        canvas.setHeight(PLAYFIELD_HEIGHT);
-        drawBall(canvas.getGraphicsContext2D());
-        drawPaddle(canvas.getGraphicsContext2D());
-        drawBricks(canvas.getGraphicsContext2D());
+        playfield.update(model);
     }
-
-    private void drawBricks(GraphicsContext gc) {
-        List<Brick> bricks = model.getBricks();
-        for (Brick brick : bricks){
-            gc.setFill(BRICK_COLORS[brick.getColor()]);
-            gc.fillRect(xToView(brick.getX()), yPosToView(brick.getY()), xToView(Model.BRICK_WIDTH), Model.BRICK_HEIGHT);
-            gc.setStroke(Color.BLACK);
-            gc.strokeRect(xToView(brick.getX()), yPosToView(brick.getY()), xToView(Model.BRICK_WIDTH), Model.BRICK_HEIGHT);
-
-        }
-    }
-
-    private void drawPaddle(GraphicsContext gc) {
-        Paddle p = model.getPaddle();
-        gc.setFill(PADDLE_COLOR);
-        gc.fillRoundRect(xToView(p.getX()), yPosToView(p.getY()), xToView(p.getWidth()), yToView(p.getHeight()), xToView(p.getHeight() ), yToView(p.getHeight() ));
-
-    }
-
-    private void drawBall(GraphicsContext gc) {
-        Ball b = model.getBall();
-        gc.setFill(BACKGROUND_COLOR);
-        gc.fillRect(0, 0, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
-        gc.setFill(BALL_COLOR);
-        gc.fillOval(xToView(b.getX() - b.getRadius()), yPosToView(b.getY() + b.getRadius()), xToView(b.getRadius() * 2), xToView(b.getRadius() * 2));
-    }
-
-
-    public void pauseScreen(){
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setStroke(Color.GOLD);
-        gc.setFont(new Font(80));
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.strokeText("Paused\nPress Space To Continue\nPress Q To Quit", PLAYFIELD_WIDTH/2 , PLAYFIELD_HEIGHT/2 );
-    }
-
-
-
 
     /////////////
     // Helpers //
     /////////////
 
-    public double xToView(double x) {
+    public static double xToView(double x) {
         return (x / Model.WIDTH) * PLAYFIELD_WIDTH;
     }
 
-    public double yToView(double y) {
+    public static double yToView(double y) {
         return (y / Model.HEIGHT) * PLAYFIELD_HEIGHT;
     }
 
-    public double yPosToView(double y) {
+    public static double yPosToView(double y) {
         return PLAYFIELD_HEIGHT - yToView(y);
     }
 }
