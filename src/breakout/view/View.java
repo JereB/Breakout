@@ -1,6 +1,7 @@
 package breakout.view;
 
 import breakout.Model.Model;
+import breakout.controller.ButtonHandler;
 import breakout.controller.Controller;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -22,10 +23,12 @@ public class View {
     private Playfield playfield;
     private Scene scene;
     private Group root;
+    private  Menu menu;
 
     public View(Stage stage, Model model) {
         this.stage = stage;
         this.model = model;
+        menu = new Menu(new ButtonHandler(model));
 
     }
 
@@ -39,12 +42,13 @@ public class View {
         stage.setScene(scene);
 
         update();
-//        stage.setResizable(false);
 
     }
 
     public void pauseScreen(){
-        playfield.pauseScreen();
+//        playfield.pauseScreen();
+          menu = new Menu(new ButtonHandler(model));
+          root.getChildren().add(menu);
     }
 
 
@@ -56,6 +60,7 @@ public class View {
 
 
     public void update() {
+        root.getChildren().remove(menu);
         playfield.update(model);
     }
 
