@@ -25,6 +25,10 @@ public class View {
     private Group root;
     private  Menu menu;
 
+
+//    flag to remove pauseScreen
+    private boolean pauseScreen = false;
+
     public View(Stage stage, Model model) {
         this.stage = stage;
         this.model = model;
@@ -49,6 +53,7 @@ public class View {
 //        playfield.pauseScreen();
           menu = new Menu(new ButtonHandler(model));
           root.getChildren().add(menu);
+          pauseScreen = true;
     }
 
 
@@ -60,7 +65,9 @@ public class View {
 
 
     public void update() {
-        root.getChildren().remove(menu);
+        if (pauseScreen) {
+            root.getChildren().remove(menu);
+        }
         playfield.update(model);
     }
 
