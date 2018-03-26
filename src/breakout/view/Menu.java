@@ -15,7 +15,7 @@ public class Menu extends BorderPane {
 
 
 //    styling of buttons
-    private String CSS_PATH = "Menu.css";
+    private String CSS_PATH = "data/Menu.css";
 
     Menu(ButtonHandler handler) {
 
