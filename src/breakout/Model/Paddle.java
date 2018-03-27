@@ -63,7 +63,7 @@ public class Paddle {
     }
 
     public void setX(double x) {
-        this.x = x;
+        this.x = x - width/2;
     }
 
     public double getY() {

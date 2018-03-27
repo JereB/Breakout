@@ -21,20 +21,7 @@ public class Controller implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
 
-        switch (model.getState()) {
-            case GAME_RUNNING:
-                gameRunning(event);
-                break;
-            case GAME_READY:
-            case GAME_PAUSED:
-                gameReady(event);
 
-        }
-
-    }
-
-
-    private void gameRunning(KeyEvent event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             if (event.getCode() == KeyCode.LEFT) {
 //                move paddle to the left
@@ -54,16 +41,13 @@ public class Controller implements EventHandler<KeyEvent> {
             }
 
         }
-    }
 
-    private void gameReady(KeyEvent event) {
-        if (event.getEventType() == KeyEvent.KEY_PRESSED) {
-            if(event.getCode() == KeyCode.SPACE) {
+        if (model.getState() == GameState.GAME_READY && event.getEventType() == KeyEvent.KEY_PRESSED) {
+            if (event.getCode() == KeyCode.SPACE) {
                 model.setState(GameState.GAME_RUNNING);
-            } else if (event.getCode() == KeyCode.Q){
-                System.exit(0);
             }
         }
     }
 
 }
+

@@ -40,10 +40,10 @@ public class Ball {
      * sets the angle of movement of the ball.
      * 0 is horizontal to the right.
      *
-     * @param angle new angle
+     * @param angle new angle in degrees
      */
     public void setAngle(double angle) {
-        this.angle = angle;
+        this.angle = Math.toRadians(angle);
     }
 
     /**
@@ -115,9 +115,6 @@ public class Ball {
         return radius;
     }
 
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
 
     /**
      * changes the angle of the ball if a surface is hit

@@ -30,6 +30,9 @@ public class Mainloop extends AnimationTimer {
                 lastFrame = 0;
                 break;
             case GAME_READY:
+                view.update();
+                model.getPaddle().update();
+                lastFrame = 0;
                 break;
         }
 

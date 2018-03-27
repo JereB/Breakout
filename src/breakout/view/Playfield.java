@@ -6,6 +6,7 @@ import breakout.Model.Model;
 import breakout.Model.Paddle;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -25,6 +26,11 @@ public class Playfield extends Canvas {
     private Color[] BRICK_COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.GHOSTWHITE, Color.CORAL};
 
 
+    private static final double HEART_SIZE = 20;
+    private static final double PADDING = 10;
+    private static final Image HEART = new Image("file:data/heart.png");
+
+
     public void update(Model model) {
         setWidth(PLAYFIELD_WIDTH);
         setHeight(PLAYFIELD_HEIGHT);
@@ -32,6 +38,7 @@ public class Playfield extends Canvas {
         drawBall(getGraphicsContext2D(), model);
         drawPaddle(getGraphicsContext2D(), model);
         drawBricks(getGraphicsContext2D(), model);
+        drawHeart(getGraphicsContext2D(), model.getLives());
     }
 
 
@@ -67,13 +74,14 @@ public class Playfield extends Canvas {
     }
 
 
-    public void pauseScreen() {
-        GraphicsContext gc = getGraphicsContext2D();
-        gc.setStroke(Color.GOLD);
-        gc.setFont(new Font(80));
-        gc.setTextAlign(TextAlignment.CENTER);
-        gc.strokeText("Paused\nPress Space To Continue\nPress Q To Quit", PLAYFIELD_WIDTH / 2, PLAYFIELD_HEIGHT / 2);
+    private void drawHeart(GraphicsContext gc, int lives){
+
+        for (int i = 0; i< lives; i++){
+            gc.drawImage(HEART, HEART_SIZE *i+ PADDING * (i+1), PADDING, HEART_SIZE, HEART_SIZE );
+        }
+
     }
+
 
 
 }

@@ -10,7 +10,6 @@ import java.util.Scanner;
  */
 class LevelManager {
 
-    private int levelCounter = -1;
     private File[] levelFiles;
 
 
@@ -20,26 +19,16 @@ class LevelManager {
     }
 
     /**
-     * Read the next Level from a file.
+     * Read the desired Level from a file.
+     *
+     * @param counter the number of the level
      * @return the new level
      */
-    public Level getLevel() {
-//        increment counter and prevent negative Index via overflow
-        if (++levelCounter < 0) {
-            levelCounter = 0;
-        }
+    public Level getLevel(int counter) {
 //        read the new Level and return the created Level
-        return new Level(readLevel(levelFiles[levelCounter % levelFiles.length]));
-    }
-
-    /**
-     * Read the file to create the corresponding bricks in a List
-     * @param file the file in wich the level is saved
-     * @return the list of Bricks in the level
-     */
-    private ArrayList<Brick> readLevel(File file) {
 
         ArrayList<Brick> bricks = new ArrayList<>();
+        File file = levelFiles[counter % levelFiles.length];
 
         try {
             Scanner sc = new Scanner(file);
@@ -47,16 +36,12 @@ class LevelManager {
             while (sc.hasNext()) {
 //                read each line as a new brick
                 String[] data = sc.next().split(",");
-                for (int i = 0; i < data.length; i++) {
-                    System.out.println(i + ": " + data[i]);
-
-                }
 
 //                interpret each comma seperated Value as one Parameter for the brick
                 double x = Double.valueOf(data[0].trim());
                 double y = Double.valueOf(data[1].trim());
                 int color = Integer.valueOf(data[2].trim());
-                Brick b = new Brick(x,y,color);
+                Brick b = new Brick(x, y, color);
                 bricks.add(b);
             }
 
@@ -65,7 +50,7 @@ class LevelManager {
 
             e.printStackTrace();
         }
-        return bricks;
+        return new Level(bricks);
     }
 
 }
