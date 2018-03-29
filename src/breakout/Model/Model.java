@@ -50,7 +50,7 @@ public class Model {
      */
     public void update(long timePassed) {
 
-        paddle.update();
+        paddle.update(timePassed);
 //        ball update is only executed, if the ball has not hit the bottom border
         if (collisions()) {
             ball.updatePos(timePassed);

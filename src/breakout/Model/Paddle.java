@@ -2,7 +2,7 @@ package breakout.Model;
 
 public class Paddle {
 
-    private static final double INCREMENT = 20;
+    private static final double SPEED = 25;
 
     private double x;
     private double y;
@@ -10,7 +10,7 @@ public class Paddle {
     private double height = 20;
     private PaddleMovement move = PaddleMovement.CENTER;
 
-    public Paddle(double width) {
+    Paddle(double width) {
         this.width = width;
         x = Model.WIDTH / 2 - width / 2;
         y = 10 + height;
@@ -34,16 +34,21 @@ public class Paddle {
     }
 
 
-    public void update() {
+    /**
+     * update the paddles position if it is supposed to be moved
+     * @param time passed time since the last update
+     */
+    public void update(long time) {
+        time/=10000000;
         switch (move) {
             case RIGHT:
                 if (x + width < Model.WIDTH) {
-                    x += INCREMENT;
+                    x += time * SPEED;
                 }
                 break;
             case LEFT:
                 if (x > 0) {
-                    x -= INCREMENT;
+                    x -= time * SPEED;
                 }
                 break;
         }
